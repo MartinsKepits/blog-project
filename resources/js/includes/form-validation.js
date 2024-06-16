@@ -68,4 +68,28 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('#create-post-form').validate({
+        errorClass: "is-invalid",
+        rules: {
+            title: {
+                required: true,
+                minlength: 8
+            },
+            description: {
+                required: true,
+                minlength: 50
+            }
+        },
+        messages: {
+            title: {
+                required: "Post title is required.",
+                minlength: "Post title must be at least 8 characters.",
+            },
+            description: {
+                required: "Post description is required.",
+                minlength: "Post description must be at least 50 characters."
+            }
+        }
+    });
 });

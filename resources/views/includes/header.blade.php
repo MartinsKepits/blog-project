@@ -24,7 +24,7 @@
                 @endguest
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link py-0" href="#"><?= __('Profile') ?></a>
+                        <a class="nav-link py-0" href="{{ route('profile') }}"><?= __('Profile') ?></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link py-0" href="{{ route('logout') }}"><?= __('Logout') ?></a>
