@@ -16,15 +16,18 @@
                 </li>
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link py-0" href="#"><?= __('Login') ?></a>
+                        <a class="nav-link py-0" href="{{ route('auth') }}"><?= __('Login') ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link py-0" href="#"><?= __('Register') ?></a>
+                        <a class="nav-link py-0" href="{{ route('auth') }}"><?= __('Register') ?></a>
                     </li>
                 @endguest
                 @auth
                     <li class="nav-item">
                         <a class="nav-link py-0" href="#"><?= __('Profile') ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link py-0" href="{{ route('logout') }}"><?= __('Logout') ?></a>
                     </li>
                 @endauth
             </ul>
