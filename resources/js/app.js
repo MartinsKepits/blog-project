@@ -1,6 +1,7 @@
 import './bootstrap';
 import 'bootstrap';
 import 'jquery-validation/dist/jquery.validate';
-import 'jquery-modal/jquery.modal'
+import 'jquery-modal/jquery.modal';
 
-import './includes/form-validation.js'
+import './includes/form-validation.js';
+import './includes/page-messages.js';
