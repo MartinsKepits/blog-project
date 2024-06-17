@@ -23,7 +23,7 @@ class PostController extends Controller
             return view('post.create');
         }
 
-        return redirect()->route('auth');
+        return redirect()->route('auth')->with('pageErrMessage', 'You must be logged in to create new posts.');
     }
 
     /**
@@ -53,9 +53,6 @@ class PostController extends Controller
         $user = Auth::user();
         $postCredentials['author'] = $user['firstname'] . ' ' . $user['lastname'];
         $postCredentials['post_author_id'] = Auth::id();
-        $errMsg = [
-            'createPostErr' => 'Sorry something went wrong. Please try again.'
-        ];
 
         try {
             Post::create($postCredentials);
@@ -64,10 +61,10 @@ class PostController extends Controller
             Log::error('Post creation failed: ' . $e->getMessage());
 
             // Redirect back with an error message
-            return redirect()->back()->withErrors($errMsg);
+            return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.')->withInput();
         }
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('pageSuccessMessage', 'You successfully created a new post.');
     }
 
     /**
@@ -80,16 +77,16 @@ class PostController extends Controller
         $post = Post::find($postId);
 
         if (!$post) {
-            return redirect()->back();
+            return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
         }
 
         if ($post->post_author_id !== Auth::id()) {
-            return redirect()->back();
+            return redirect()->back()->with('pageErrMessage', 'Sorry you are not allowed to delete this post.');
         }
 
         $post->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('pageSuccessMessage', 'You successfully deleted a post.');
     }
 
     /**
@@ -109,20 +106,20 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
-            return redirect()->back();
+            return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
         }
 
         try {
             $post = Post::findOrFail($request->post_id);
             $post->update($request->only(['title', 'description']));
 
-            return redirect()->route('profile');
+            return redirect()->route('profile')->with('pageSuccessMessage', 'You successfully updated a post.');
         } catch (\Exception $e) {
             // Log the error message
             Log::error('Post update failed: ' . $e->getMessage());
 
             // Redirect back
-            return redirect()->back();
+            return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
         }
     }
 }

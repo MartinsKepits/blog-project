@@ -21,7 +21,7 @@ class UserController extends Controller
             return view('auth.auth');
         }
 
-        return redirect()->route('profile');
+        return redirect()->route('profile')->with('pageSuccessMessage', 'You are already logged in!');
     }
 
     /**
@@ -51,8 +51,9 @@ class UserController extends Controller
         $errMsg = [
             'invalidEmailOrPassword' => 'Invalid email address or password.',
         ];
+        $successMsg = 'You are successfully logged in!';
 
-        return $this->attemptLogin($request, $loginCredentials, $remember, $errMsg);
+        return $this->attemptLogin($request, $loginCredentials, $remember, $errMsg, $successMsg);
     }
 
     /**
@@ -95,6 +96,7 @@ class UserController extends Controller
         $errMsg = [
             'registerErr' => 'Sorry something went wrong. Please try again.'
         ];
+        $successMsg = 'You are successfully registered!';
 
         try {
             User::create($registerCredentials);
@@ -106,7 +108,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($errMsg);
         }
 
-        return $this->attemptLogin($request, $registerCredentials, $remember, $errMsg);
+        return $this->attemptLogin($request, $registerCredentials, $remember, $errMsg, $successMsg);
 
     }
 
@@ -122,7 +124,7 @@ class UserController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('pageSuccessMessage', 'You are successfully logged out!');
     }
 
     /**
@@ -132,13 +134,13 @@ class UserController extends Controller
      * @param $errMsg
      * @return RedirectResponse
      */
-    public function attemptLogin(Request $request, $credentials, $remember, $errMsg): RedirectResponse
+    public function attemptLogin(Request $request, $credentials, $remember, $errMsg, $successMsg): RedirectResponse
     {
         if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('profile');
+            return redirect()->route('profile')->with('pageSuccessMessage', $successMsg);
         }
 
         return back()->withErrors($errMsg);

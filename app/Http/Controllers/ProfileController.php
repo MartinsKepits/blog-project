@@ -28,7 +28,7 @@ class ProfileController extends Controller
             return view('auth.profile')->with($viewParams);
         }
 
-        return redirect()->route('auth');
+        return redirect()->route('auth')->with('pageErrMessage', 'You must be logged in to view profile.');
     }
 
     /**
