@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // Login Form validation
     $('#login-form').validate({
         errorClass: "is-invalid",
         rules: {
@@ -23,6 +24,7 @@ $(document).ready(function () {
         }
     });
 
+    // Register form validation
     $('#register-form').validate({
         errorClass: "is-invalid",
         rules: {
@@ -69,27 +71,33 @@ $(document).ready(function () {
         }
     });
 
-    $('#create-post-form').validate({
-        errorClass: "is-invalid",
-        rules: {
-            title: {
-                required: true,
-                minlength: 8
+    // Create, Update post form validation
+    createUpdatePostValidation('#create-post-form');
+    createUpdatePostValidation('#update-post-form');
+
+    function createUpdatePostValidation(formId) {
+        $(formId).validate({
+            errorClass: "is-invalid",
+            rules: {
+                title: {
+                    required: true,
+                    minlength: 8
+                },
+                description: {
+                    required: true,
+                    minlength: 50
+                }
             },
-            description: {
-                required: true,
-                minlength: 50
+            messages: {
+                title: {
+                    required: "Post title is required.",
+                    minlength: "Post title must be at least 8 characters.",
+                },
+                description: {
+                    required: "Post description is required.",
+                    minlength: "Post description must be at least 50 characters."
+                }
             }
-        },
-        messages: {
-            title: {
-                required: "Post title is required.",
-                minlength: "Post title must be at least 8 characters.",
-            },
-            description: {
-                required: "Post description is required.",
-                minlength: "Post description must be at least 50 characters."
-            }
-        }
-    });
+        });
+    }
 });

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Post;
@@ -8,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -65,5 +68,61 @@ class PostController extends Controller
         }
 
         return redirect()->route('profile');
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function delete(Request $request): RedirectResponse
+    {
+        $postId = $request->input('post_id');
+        $post = Post::find($postId);
+
+        if (!$post) {
+            return redirect()->back();
+        }
+
+        if ($post->post_author_id !== Auth::id()) {
+            return redirect()->back();
+        }
+
+        $post->delete();
+
+        return redirect()->back();
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function update(Request $request): RedirectResponse
+    {
+        if (!Auth::check()) {
+            return redirect()->route('auth');
+        }
+
+        $rules = [
+            'title' => 'required|min:8',
+            'description' => 'required|min:50',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back();
+        }
+
+        try {
+            $post = Post::findOrFail($request->post_id);
+            $post->update($request->only(['title', 'description']));
+
+            return redirect()->route('profile');
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Post update failed: ' . $e->getMessage());
+
+            // Redirect back
+            return redirect()->back();
+        }
     }
 }
