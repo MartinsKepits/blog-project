@@ -52,8 +52,14 @@
     }
 }
 
+// Delete Modal
+.modal.delete-modal {
+    width: 40%;
+}
+
 @media (max-width: 768px) {
-    .modal {
+    .modal,
+    .modal.delete-modal {
         width: 100%;
     }
 }

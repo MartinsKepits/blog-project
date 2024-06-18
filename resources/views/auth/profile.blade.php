@@ -61,11 +61,17 @@
                                             </form>
                                         </div>
 
-                                        <form action="{{ route('delete.post') }}" method="POST" novalidate>
-                                            @csrf
-                                            <input type="hidden" name="post_id" value="{{ $post->id }}" />
-                                            <button type="submit" class="btn btn-danger rounded-pill text-light ms-1"><?= __('Delete') ?></button>
-                                        </form>
+                                        <a href="#delete-post" rel="modal:open" class="btn btn-danger rounded-pill text-light ms-1"><?= __('Delete') ?></a>
+                                        <div id="delete-post" class="modal delete-modal">
+                                            <form action="{{ route('delete.post') }}" method="POST" novalidate>
+                                                @csrf
+
+                                                <input type="hidden" name="post_id" value="{{ $post->id }}" />
+                                                <p class="h5 mb-3"><?= __('Are you sure you want to delete this post?') ?></p>
+                                                <button type="submit" class="d-inline-block btn btn-dark rounded-pill w-25"><?= __('Yes') ?></button>
+                                                <a href="#" rel="modal:close" class="d-inline-block btn btn-dark rounded-pill ms-1 w-25"><?= __('No') ?></a>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
