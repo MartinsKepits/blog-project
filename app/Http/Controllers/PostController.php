@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Rating;
 
 class PostController extends Controller
 {
@@ -121,5 +122,31 @@ class PostController extends Controller
             // Redirect back
             return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function rate(Request $request, $id): RedirectResponse
+    {
+        if (!Auth::check()) {
+            return redirect()->route('auth')->with('pageErrMessage', 'You must be logged in to rate a posts.');
+        }
+
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        Rating::updateOrCreate(
+            [
+                'user_id' => Auth::id(),
+                'post_id' => $id,
+            ],
+            ['rating' => $request->rating]
+        );
+
+        return redirect()->back()->with('pageSuccessMessage', 'Rating submitted!');
     }
 }

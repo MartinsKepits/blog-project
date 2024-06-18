@@ -16,7 +16,7 @@
 
                                 <div class="d-flex justify-content-between align-items-center position-absolute w-100 bottom-0 start-0">
                                     <a href="{{ route('post', $post->id) }}" class="card-link"><?= __('Read Full Post') ?></a>
-                                    <span>Stars</span>
+                                    <x-post-avg-rating :rating="$post->averageRating()" />
                                 </div>
                             </div>
                         </div>
