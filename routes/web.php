@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostsController;
 
 Route::get('/', function () {
     return view('page.home');
@@ -20,3 +21,6 @@ Route::get('/create-new-post', [PostController::class, 'index'])->name('create.n
 Route::post('/create-post', [PostController::class, 'create'])->name('create.post');
 Route::post('/delete-post', [PostController::class, 'delete'])->name('delete.post');
 Route::post('/update-post', [PostController::class, 'update'])->name('update.post');
+
+Route::get('/posts', [PostsController::class, 'index'])->name('posts');
+Route::get('/posts/{id}', [PostsController::class, 'show'])->name('post');

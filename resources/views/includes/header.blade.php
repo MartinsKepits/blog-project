@@ -12,7 +12,7 @@
                     <a class="nav-link py-0" href="{{ route('home') }}"><?= __('Home') ?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link py-0" href="#"><?= __('Posts') ?></a>
+                    <a class="nav-link py-0" href="{{ route('posts') }}"><?= __('Posts') ?></a>
                 </li>
                 @guest
                     <li class="nav-item">
