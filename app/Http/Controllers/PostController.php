@@ -85,6 +85,7 @@ class PostController extends Controller
             return redirect()->back()->with('pageErrMessage', 'Sorry you are not allowed to delete this post.');
         }
 
+        $post->ratings()->delete();
         $post->delete();
 
         return redirect()->back()->with('pageSuccessMessage', 'You successfully deleted a post.');

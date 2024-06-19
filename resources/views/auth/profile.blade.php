@@ -41,8 +41,8 @@
                                     <h5 class="card-title mb-0">{{ $post->title }}</h5>
 
                                     <div class="d-flex align-items-center">
-                                        <a href="#update-post" rel="modal:open" class="btn btn-secondary rounded-pill text-light me-1"><?= __('Update') ?></a>
-                                        <div id="update-post" class="modal">
+                                        <a href="#update-post-{{ $post->id }}" rel="modal:open" class="btn btn-secondary rounded-pill text-light me-1"><?= __('Update') ?></a>
+                                        <div id="update-post-{{ $post->id }}" class="modal">
                                             <form action="{{ route('update.post') }}" id="update-post-form" method="POST" novalidate>
                                                 @csrf
 
@@ -61,8 +61,8 @@
                                             </form>
                                         </div>
 
-                                        <a href="#delete-post" rel="modal:open" class="btn btn-danger rounded-pill text-light ms-1"><?= __('Delete') ?></a>
-                                        <div id="delete-post" class="modal delete-modal">
+                                        <a href="#delete-post-{{ $post->id }}" rel="modal:open" class="btn btn-danger rounded-pill text-light ms-1"><?= __('Delete') ?></a>
+                                        <div id="delete-post-{{ $post->id }}" class="modal delete-modal">
                                             <form action="{{ route('delete.post') }}" method="POST" novalidate>
                                                 @csrf
 
