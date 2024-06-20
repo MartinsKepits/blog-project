@@ -12,6 +12,11 @@ class Rating extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable = [
         'user_id',
         'post_id',

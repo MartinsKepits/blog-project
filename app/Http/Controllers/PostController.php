@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Rating;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Rating;
 
 class PostController extends Controller
 {
@@ -58,10 +58,8 @@ class PostController extends Controller
         try {
             Post::create($postCredentials);
         } catch (\Exception $e) {
-            // Log the error message
             Log::error('Post creation failed: ' . $e->getMessage());
 
-            // Redirect back with an error message
             return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.')->withInput();
         }
 
@@ -117,10 +115,8 @@ class PostController extends Controller
 
             return redirect()->route('profile')->with('pageSuccessMessage', 'You successfully updated a post.');
         } catch (\Exception $e) {
-            // Log the error message
             Log::error('Post update failed: ' . $e->getMessage());
 
-            // Redirect back
             return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
         }
     }
@@ -140,14 +136,20 @@ class PostController extends Controller
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
-        Rating::updateOrCreate(
-            [
-                'user_id' => Auth::id(),
-                'post_id' => $id,
-            ],
-            ['rating' => $request->rating]
-        );
+        try {
+            Rating::updateOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'post_id' => $id,
+                ],
+                ['rating' => $request->rating]
+            );
 
-        return redirect()->back()->with('pageSuccessMessage', 'Rating submitted!');
+            return redirect()->back()->with('pageSuccessMessage', 'Rating submitted!');
+        } catch (\Exception $e) {
+            Log::error('Post rating failed: ' . $e->getMessage());
+
+            return redirect()->back()->with('pageErrMessage', 'Sorry something went wrong. Please try again.');
+        }
     }
 }

@@ -101,10 +101,8 @@ class UserController extends Controller
         try {
             User::create($registerCredentials);
         } catch (\Exception $e) {
-            // Log the error message
             Log::error('User registration failed: ' . $e->getMessage());
 
-            // Redirect back with an error message
             return redirect()->back()->withErrors($errMsg);
         }
 
@@ -121,7 +119,6 @@ class UserController extends Controller
         Auth::logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
         return redirect()->route('home')->with('pageSuccessMessage', 'You are successfully logged out!');
@@ -132,6 +129,7 @@ class UserController extends Controller
      * @param $credentials
      * @param $remember
      * @param $errMsg
+     * @param $successMsg
      * @return RedirectResponse
      */
     public function attemptLogin(Request $request, $credentials, $remember, $errMsg, $successMsg): RedirectResponse

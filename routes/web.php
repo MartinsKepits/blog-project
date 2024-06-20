@@ -17,11 +17,11 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
-Route::get('/create-new-post', [PostController::class, 'index'])->name('create.new.post');
-Route::post('/create-post', [PostController::class, 'create'])->name('create.post');
+Route::get('/create-post', [PostController::class, 'index'])->name('create.new.post');
+Route::post('/create-post/create', [PostController::class, 'create'])->name('create.post');
 Route::post('/delete-post', [PostController::class, 'delete'])->name('delete.post');
 Route::post('/update-post', [PostController::class, 'update'])->name('update.post');
-Route::post('/posts/{id}/rate', [PostController::class, 'rate'])->name('post.rate');
 
 Route::get('/posts', [PostsController::class, 'index'])->name('posts');
 Route::get('/posts/{id}', [PostsController::class, 'show'])->name('post');
+Route::post('/posts/{id}/rate', [PostController::class, 'rate'])->name('post.rate');

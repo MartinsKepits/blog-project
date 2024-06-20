@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TextHelper;
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
 
@@ -15,20 +16,7 @@ class PostsController extends Controller
     public function index(): View
     {
         $posts = Post::all()->map(function ($post) {
-            $description = $post->description;
-
-            if (strlen($description) > 100) {
-                $description = substr($description, 0, 100);
-                if (!str_ends_with($description, ' ')) {
-                    $lastSpace = strrpos($description, ' ');
-                    if ($lastSpace !== false) {
-                        $description = substr($description, 0, $lastSpace);
-                    }
-                }
-                $description .= '...';
-            }
-
-            $post->description = $description;
+            $post->description = TextHelper::shortenDescription($post->description);
             return $post;
         });
 

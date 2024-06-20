@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,9 +33,9 @@ class Post extends Model
     }
 
     /**
-     * @return float
+     * @return float|int|string
      */
-    public function averageRating(): float
+    public function averageRating(): float|int|string
     {
         return $this->ratings()->avg('rating') ?: 0;
     }
