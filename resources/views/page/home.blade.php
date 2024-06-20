@@ -3,7 +3,7 @@
 @section('content')
     <div class="hero-wrapper container-lg py-5">
         <div class="row align-items-center">
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 min-h-75vh">
                 <img src="{{ url('images/homepage/homepage-hero.jpg') }}" class="img-fluid" alt="Blogger writes a blog">
             </div>
             <div class="col-12 col-md-6">
