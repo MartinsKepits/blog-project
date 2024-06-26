@@ -1,4 +1,4 @@
-<div class="top-rated-posts-wrapper container-lg mt-5">
+<div id="top-rated-posts" class="top-rated-posts-wrapper container-lg mt-5">
     <h2 class="h4 fw-bold text-uppercase w-max-content mb-4">
         <?= __('Top Rated Posts') ?>
         <span class="d-block mt-1 border-bottom border-warning border-3 rounded-pill w-50"></span>

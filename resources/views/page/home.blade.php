@@ -12,7 +12,7 @@
                 <a href="{{ route('auth') }}" class="btn btn-info rounded-pill text-light"><?= __('Register') ?></a>
             </div>
         </div>
-        <a href="#" class="text-dark fw-bold d-block mt-4 mt-md-0 text-center"><?= __('Scroll Down') ?></a>
+        <a href="#top-rated-posts" class="text-dark fw-bold d-block mt-4 mt-md-0 text-center"><?= __('Scroll Down') ?></a>
     </div>
 
     <x-top-rated-posts/>
