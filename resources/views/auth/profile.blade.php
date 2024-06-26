@@ -82,6 +82,7 @@
                         No Posts Found
                     </div>
                 @endif
+                    <a href="{{ route('create.new.post') }}" class="btn btn-info rounded-pill text-light d-block w-max-content mt-4 mx-auto"><?= __('Create New Post') ?></a>
             </div>
         </div>
     </div>
